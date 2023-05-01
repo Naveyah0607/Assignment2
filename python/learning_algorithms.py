@@ -155,14 +155,16 @@ class CriticNet(nn.Module):
         super(CriticNet, self).__init__()
         # TODO: Define the critic net
         # HINT: You can use nn.Sequential to set up a 2 layer feedforward neural network.
-        self.network = nn.Sequential(
+        self.ff_net = nn.Sequential(
             nn.Linear(input_size, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, output_size)
         )
 
     def forward(self, obs):
-        return self.network(obs)
+        return self.ff_net(obs)
 
 
 
@@ -327,7 +329,7 @@ class QNet(nn.Module):
     class QNet(nn.Module):
     def __init__(self, input_size, output_size, hidden_dim):
         super(QNet, self).__init__()
-        self.network = nn.Sequential(
+        self.ff_net = nn.Sequential(
             nn.Linear(input_size, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, hidden_dim),
@@ -336,4 +338,4 @@ class QNet(nn.Module):
         )
 
     def forward(self, obs):
-        return self.network(obs)
+        return self.ff_net(obs)
